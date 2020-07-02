@@ -87,3 +87,15 @@ exports.updateProfilePic = (req, res) => {
     }
   );
 };
+exports.searchUsers = (req, res) => {
+  let userPattern = new RegExp("^" + req.body.query);
+  User.find({ email: { $regex: userPattern } })
+    .then((users) => {
+      if (!users) return res.status(404).json({ msg: "User doesnt found" });
+
+      res.json(users);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

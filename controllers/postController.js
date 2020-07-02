@@ -35,6 +35,7 @@ exports.getAllPosts = (req, res) => {
   Post.find()
     .populate("postedBy", "_id name")
     .populate("comments.postedBy", "name")
+    .sort("-createdAt")
     .then((posts) => {
       res.json({ posts });
     })
@@ -57,6 +58,7 @@ exports.getFollowingPosts = (req, res) => {
   Post.find({ postedBy: { $in: req.user.following } })
     .populate("postedBy", "_id name")
     .populate("comments.postedBy", "name")
+    .sort("-createdAt")
     .then((posts) => {
       res.json({ posts });
     })
