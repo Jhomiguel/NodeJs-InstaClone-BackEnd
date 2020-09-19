@@ -1,12 +1,13 @@
 const express = require("express");
 const app = express();
-const mongoose = require("mongoose");
+const DBconnection = require("./config/db"); //CommonJS
+const router = express.Router();
 const cors = require("cors");
-const DBconnection = require("./config/db");
-const PORT = process.env.PORT || 5000;
 
-app.use(cors());
 DBconnection();
+const PORT = process.env.PORT || 5000;
+app.use(cors());
+
 app.use(express.json());
 
 app.use(require("./routes/auth"));
